@@ -93,14 +93,14 @@
               </div>
               <div class="card-body" style="background-color: #faf9f8">
                 <div class="row">
-                  <div class="col-md-8">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label for="title">Title</label>
                       <input type="text" class="form-control" id="title" placeholder="Title" maxlength="100"
                         [(ngModel)]="model.occuProf.title" name="title" required />
                     </div>
                   </div>
-                  <div class="col-md-4 mt-4" style="display: inline-flex">
+                  <div class="col-md-3 mt-4" style="display: inline-flex">
                     <span class="input-group-prepend">
                       <div class="pr-1"> Visibility: Draft </div>
                       <label class="switch switch-label switch-pill switch-outline-primary-alt">
@@ -109,6 +109,17 @@
                         <span class="switch-slider" data-checked="✓" data-unchecked="X"></span>
                       </label>
                       <div class="pl-1">Publish </div>
+                    </span>
+                  </div>
+                  <div class="col-md-3 mt-4" style="display: inline-flex">
+                    <span *ngIf="model.isPublic" class="input-group-prepend">
+                      <div class="pr-1"> Publish also on <a href="https://praxisnetwork.eu/" target="_blank">PRAXIS Portal</a>: No </div>
+                      <label class="switch switch-label switch-pill switch-outline-primary-alt">
+                        <input class="switch-input" type="checkbox" value="knowledges" name="inPraxis"
+                          [(ngModel)]="model.inPraxis" />
+                        <span class="switch-slider" data-checked="✓" data-unchecked="X"></span>
+                      </label>
+                      <div class="pl-1">Yes </div>
                     </span>
                   </div>
 
@@ -154,6 +165,10 @@
 
                       <input type="number" size="1" class="form-control" id="eqf" [(ngModel)]="model.occuProf.eqf"
                         name="eqf" min="1" max="8" />
+                    </div>
+                    <div class="form-group">
+                      <label for="visibleUntil">Offer validity</label>
+                      <input name="visibleUntil" type="text" placeholder="Visible until" class="form-control" [minDate]="minDate" [(ngModel)]="model.visibleUntil" [bsConfig]="{ containerClass: 'theme-dark-blue', dateInputFormat: 'DD-MM-YYYY' }" bsDatepicker>
                     </div>
                   </div>
                 </div>
@@ -575,9 +590,9 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
-                    <label for="field">Type of contract</label>
+                    <label for="typeContract">Type of contract</label>
                     <ng-select [items]="typeOfContract" name="typeContract" [multiple]="false"
                       [(ngModel)]="model.typeContract" [clearable]="false">
                       <ng-template ng-optgroup-tmp let-item="item">
@@ -586,7 +601,18 @@
                     </ng-select>
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="durationContract">Duration of contract</label>
+                    <ng-select [items]="durationContract" name="durationContract" [multiple]="false"
+                      [(ngModel)]="model.duration" [clearable]="false">
+                      <ng-template ng-optgroup-tmp let-item="item">
+                        {{item.name || 'Unnamed group'}}
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="minSalary">Annual Salary Range (Min - Max)</label>
                     <div class="form-row">
@@ -610,7 +636,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 mt-4">
+                <div class="col-md-3 mt-4">
                   <span class="input-group-prepend">
                     <label class="switch switch-label switch-pill switch-outline-primary-alt">
                       <input class="switch-input" type="checkbox" [(ngModel)]="model.motivationLetter" checked />

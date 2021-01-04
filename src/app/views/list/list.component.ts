@@ -73,11 +73,14 @@ export class ListComponent implements OnInit {
             .subscribeToJobOffers()
             .subscribe(jobOffers => {
               this.jobOffers = [];
-              jobOffers.forEach(jo => {
-                if (jo.isPublic) {
-                  this.jobOffers.push(jo);
-                } else if (this.currentUser && this.currentUser.organizations && this.currentUser.organizations.indexOf(jo.orgId) > -1) {
-                  this.jobOffers.push(jo);
+              const now = new Date();
+                jobOffers.forEach(jo => {
+                  if (!jo.visibleUntil || jo.visibleUntil.toDate() > now){
+                  if (jo.isPublic) {
+                    this.jobOffers.push(jo);
+                  } else if (this.currentUser && this.currentUser.organizations && this.currentUser.organizations.indexOf(jo.orgId) > -1) {
+                    this.jobOffers.push(jo);
+                  }
                 }
               });
               this.filteredJobOffers = this.jobOffers;

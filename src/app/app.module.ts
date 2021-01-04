@@ -71,6 +71,9 @@ import { Eo4geoFooterComponent } from './components/eo4geo-footer/eo4geo-footer.
 import { Eo4geoHeaderComponent } from './components/eo4geo-header/eo4geo-header.component';
 import { ReleaseNotesComponent } from './components/release-notes/release-notes.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 @NgModule({
   imports: [
@@ -95,7 +98,9 @@ import { ReleaseNotesComponent } from './components/release-notes/release-notes.
     AngularFirePerformanceModule,
     HttpClientModule,
     PopoverModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot()
   ],
   declarations: [
     AppComponent,

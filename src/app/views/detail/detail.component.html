@@ -70,6 +70,7 @@
               </div>
             </div>
             <p style="padding-top: 20px;">{{ selectedOffer.occuProf.description }}</p>
+              <div *ngIf="selectedOffer.visibleUntil"> <br> <b> Valid until: </b>{{ selectedOffer.visibleUntil.toDate() | date:'dd-MMM-yyyy'}} </div>
             <hr />
             <div class="row">
               <div class="col-md-4">
@@ -190,6 +191,7 @@
               </div>
               <div class="col-md-6">
                 <b> Type of contract: </b>{{ selectedOffer.typeContract }}
+               <div *ngIf="selectedOffer.duration"> <br> <b> Duration: </b>{{ selectedOffer.duration }} </div>
               </div>
             </div>
             <br>

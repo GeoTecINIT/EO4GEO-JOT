@@ -5,6 +5,7 @@ import { OcupationalProfile, JobOffer } from '../ocupational-profile';
 import * as firebase from 'firebase';
 
 const collection = 'JobOffers';
+const collectionPraxis = 'praxis';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,12 @@ export class JobofferService {
       .collection(collection)
       .doc(id)
       .set(newJobOffer);
+    if (newJobOffer.inPraxis) {
+      this.db
+        .collection(collectionPraxis)
+        .doc<JobOffer>(id)
+        .set(newJobOffer);
+    }
   }
 
   removeJobOffer(jobOfferId: string) {
@@ -50,7 +57,13 @@ export class JobofferService {
     updatedJobOffer.updatedAt = timestamp;
     this.db
       .collection(collection)
-      .doc<OcupationalProfile>(jobOfferId)
+      .doc<JobOffer>(jobOfferId)
       .update(updatedJobOffer);
+    if (updatedJobOffer.inPraxis) {
+      this.db
+        .collection(collectionPraxis)
+        .doc<JobOffer>(jobOfferId)
+        .update(updatedJobOffer);
+    }
   }
 }

@@ -10,7 +10,9 @@ import { EscoCompetenceService } from '../../services/esco-competence.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User, UserService } from '../../services/user.service';
-import { BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-newjo',
@@ -24,8 +26,10 @@ export class NewjoComponent implements OnInit {
   fullcompetences = [];
 
   // model = new OcupationalProfile('', '', '', '', null, 1, [], [], [], [], []);
+  options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+
   // tslint:disable-next-line:max-line-length
-  model = new JobOffer('', '', '', '', '', new OcupationalProfile('', '', '', '', '' , '', '', [], 1, [], [], [], [], [], '', false, null, null), [], '', '', '', 0, 0, [], false, false, [], [], 0, new Date().toDateString(), null, null, '', '');
+  model = new JobOffer('', '', '', '', '', new OcupationalProfile('', '', '', '', '', '', '', [], 1, [], [], [], [], [], '', false, null, null), [], '', '', '', 0, 0, [], false, false, [], [], 0, new Date().toDateString(), null, null, '', '', false, '', '');
 
   public value: string[];
   public current: string;
@@ -111,36 +115,36 @@ export class NewjoComponent implements OnInit {
       content: ['choose', 'define', 'find', 'identify', 'list', 'locate', 'name', 'recognize', 'relate', 'remember', 'select', 'state', 'write']
     },
     {
-      name :  'Understand',
-      content : [
+      name: 'Understand',
+      content: [
         'cite', 'classify', 'compare', 'contrast', 'deliver', 'demonstrate', 'discuss', 'estimate', 'explain', 'illustrate', 'indicate',
         'interpret', 'outline', 'relate', 'report', 'review', 'understand'
       ]
     },
     {
-      name :  'Apply',
-      content : [
+      name: 'Apply',
+      content: [
         'apply', 'build', 'calculate', 'choose', 'classify', 'construct', 'correlate', 'demonstrate', 'develop', 'identify', 'illustrate', 'implement', 'interpret',
         'model', 'organise', 'perform', 'plan', 'relate', 'represent', 'select', 'solve', 'teach', 'use'
       ]
     },
     {
-      name :  'Analyze',
-      content : [
+      name: 'Analyze',
+      content: [
         'analyse', 'arrange', 'choose', 'classify', 'compare', 'differentiate', 'distinguish', 'examine', 'find', 'install', 'list',
         'order', 'prioritize', 'query', 'research', 'select'
       ]
     },
     {
-      name :  'Evaluate',
-      content : [
+      name: 'Evaluate',
+      content: [
         'assess', 'check', 'choose', 'compare', 'decide', 'defend', 'determine', 'estimate', 'evaluate', 'explain', 'interpret', 'judge', 'justify',
         'measure', 'prioritize', 'recommend', 'select', 'test', 'validate'
       ]
     },
     {
-      name :  'Create',
-      content : [
+      name: 'Create',
+      content: [
         'add to', 'build', 'change', 'choose', 'compile', 'construct', 'convert', 'create', 'design', 'develop', 'devise', 'discuss', 'estimate',
         'manage', 'model', 'modify', 'plan', 'process', 'produce', 'propose', 'revise', 'solve', 'test', 'transform'
       ]
@@ -159,12 +163,14 @@ export class NewjoComponent implements OnInit {
   notFoundData = '';
 
   typeOfContract = ['Fixed', 'Internship', 'Scholarship', 'Temporal'];
+  durationContract = ['<1 month', '1 - 3 month', '3 - 6 month', '> 6 month'];
 
-  currency = [{cod: '$', name: 'USD'}, {cod: '€', name: 'EUR'}, {cod: '£', name: 'GBP'}];
+  currency = [{ cod: '$', name: 'USD' }, { cod: '€', name: 'EUR' }, { cod: '£', name: 'GBP' }];
 
   userDivisions: string[] = [];
   saveDiv = '';
 
+  minDate: Date;
 
   constructor(
     public occuprofilesService: OcuprofilesService,
@@ -200,6 +206,9 @@ export class NewjoComponent implements OnInit {
           }
         });
       }
+
+      this.minDate = new Date();
+      this.minDate.setDate(this.minDate.getDate());
     });
   }
 
@@ -463,10 +472,10 @@ export class NewjoComponent implements OnInit {
 
   // Add custom competence to model to force updating component, and to competences lists to find it again if removed
   addExtraCompetence(comp) {
-    this.model.occuProf.competences = [...this.model.occuProf.competences, { preferredLabel: comp, reuseLevel: 'custom'  }];
+    this.model.occuProf.competences = [...this.model.occuProf.competences, { preferredLabel: comp, reuseLevel: 'custom' }];
     this.competences = [...this.competences, { preferredLabel: comp, reuseLevel: 'custom' }];
     this.model.occuProf.customCompetences.push(comp);
-    this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp, reuseLevel: 'custom'  }];
+    this.escoService.allcompetences = [...this.escoService.allcompetences, { preferredLabel: comp, reuseLevel: 'custom' }];
     this.escoService.basicCompetences = [...this.escoService.basicCompetences, { preferredLabel: comp, reuseLevel: 'custom', uri: null }];
     // console.log('add compr:' + comp);
   }
@@ -499,7 +508,7 @@ export class NewjoComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    this.modalRef = this.modalService.show(template, { class: 'modal-lg' });
   }
 
   loadDivisions() {
