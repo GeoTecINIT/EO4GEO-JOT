@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
 import { OcupationalProfile, Competence, JobOffer } from '../../ocupational-profile';
-import * as bok from '@eo4geo/bok-dataviz';
+import * as bok from '@eo4geo/find-in-bok-dataviz';
 import { OcuprofilesService } from '../../services/ocuprofiles.service';
 import { Organization, OrganizationService } from '../../services/organization.service';
 import { JobofferService } from '../../services/joboffer.service';
@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User, UserService } from '../../services/user.service';
 import { BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-newjo',
@@ -204,7 +205,12 @@ export class NewjoComponent implements OnInit {
   }
 
   ngOnInit() {
-    bok.visualizeBOKData('#bubbles', '#textBoK');
+    const inputObject = {
+      svgId: '#bubbles',
+      textId: '#textBoK',
+      urls: environment.URL_ARRAY
+    };
+    bok.visualizeBOKData(inputObject);
     this.getMode();
 
     this.observer = new MutationObserver(mutations => {
@@ -240,7 +246,7 @@ export class NewjoComponent implements OnInit {
     const divs = this.textBoK.nativeElement.getElementsByTagName('div');
     if (divs['bokskills'] != null) {
       const shortCode = this.textBoK.nativeElement.getElementsByTagName('h4')[0].innerText.split(' ')[0];
-      const as = divs['bokskills'].getElementsByTagName('a');
+      const as = divs['bokskills'].getElementsByTagName('li');
       for (const skill of as) {
         if (!this.model.occuProf.skills.includes(shortCode + ' ' + skill.innerText)) {
           this.model.occuProf.skills.push(shortCode + ' ' + skill.innerText);
