@@ -42,7 +42,7 @@
               </button>
               <button type="submit" class="btn btn-pill btn-primary"
                 *ngIf="model.occuProf.title == '' || model.occuProf.description == '' " [hidden]="userOrgs.length == 0"
-                tooltip="Add a title and a description to save your Job Offer." [disabled]="!saveOrg">
+                tooltip="Add a title and a description to save your Job Offer." disabled aria-disabled="true">
                 Save
               </button>
             </div>
@@ -645,6 +645,17 @@
             </div>
           </div>
           <!-- <hr /> -->
+          <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-pill btn-primary" (click)="saveOccuProfile()" routerLink="/list"
+              *ngIf="model.occuProf.title != '' && model.occuProf.description != '' ">
+              Save
+            </button>
+            <button type="submit" class="btn btn-pill btn-primary"
+              *ngIf="model.occuProf.title == '' || model.occuProf.description == '' " [hidden]="userOrgs.length == 0"
+              tooltip="Add a title and a description to save your Job Offer." disabled aria-disabled="true">
+              Save
+            </button>
+          </div>
         </div>
       </div>
     </div>
