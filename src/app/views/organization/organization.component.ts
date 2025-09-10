@@ -30,13 +30,10 @@ export class OrganizationComponent implements OnInit {
 
   return = '';
 
-  constructor(
-    private afAuth: AngularFireAuth,
-    private organizationService: OrganizationService,
-    private userService: UserService,
-    private ngZone: NgZone,
-    private router: Router
-  ) {
+  constructor(private afAuth: AngularFireAuth, private organizationService: OrganizationService, 
+              private userService: UserService, private ngZone: NgZone, private router: Router) {}
+
+  ngOnInit() {
     // Load users
     this.afAuth.auth.onAuthStateChanged(user => {
       if (user) {
@@ -53,9 +50,6 @@ export class OrganizationComponent implements OnInit {
         });
       }
     });
-  }
-
-  ngOnInit() {
   }
 
   filterOrgs() {
@@ -84,7 +78,6 @@ export class OrganizationComponent implements OnInit {
         org.admin.forEach(adminId => {
           const userSubAdmin = this.userService.getUserById(adminId).subscribe(adminDB => {
             if (adminDB) {
-              console.log('add user admin:' + adminDB.name + ' ' + adminDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.adminUser.push(adminDB);
             }
             userSubAdmin.unsubscribe();
@@ -99,7 +92,6 @@ export class OrganizationComponent implements OnInit {
           const userSubReg = this.userService.getUserById(regurlarId).subscribe(regularDB => {
             if (regularDB) {
               // tslint:disable-next-line:max-line-length
-              console.log('add user regular:' + regularDB.name + ' ' + regularDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.regularUser.push(regularDB);
             }
             userSubReg.unsubscribe();
@@ -114,7 +106,6 @@ export class OrganizationComponent implements OnInit {
           const userSubPen = this.userService.getUserById(pendingId).subscribe(pendingDB => {
             if (pendingDB) {
               // tslint:disable-next-line:max-line-length
-              console.log('add user regular:' + pendingDB.name + ' ' + pendingDB._id + ' to ' + org.name + 'orgs length: ' + this.orgs.length);
               org.pendingUser.push(pendingDB);
             }
             userSubPen.unsubscribe();

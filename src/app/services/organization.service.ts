@@ -79,13 +79,14 @@ export class OrganizationService {
   }
 
   updateOrganizationWithId(organizationId: string, updatedOrganization: Organization) {
-    updatedOrganization.adminUser = null;
-    updatedOrganization.regularUser = null;
-    updatedOrganization.pendingUser = null;
+    const updateOrgObject = new Organization(updatedOrganization);
+    updateOrgObject.adminUser = null;
+    updateOrgObject.regularUser = null;
+    updateOrgObject.pendingUser = null;
     this.db
       .collection(collection)
       .doc<Organization>(organizationId)
-      .update(updatedOrganization);
+      .update(updateOrgObject);
   }
 
   removeOrganization(org: Organization) {
