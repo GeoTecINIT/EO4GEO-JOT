@@ -70,6 +70,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { Eo4geoFooterComponent } from './components/eo4geo-footer/eo4geo-footer.component';
 import { Eo4geoHeaderComponent } from './components/eo4geo-header/eo4geo-header.component';
 import { ReleaseNotesComponent } from './components/release-notes/release-notes.component';
+import { SpacesuiteModalComponent } from './components/spacesuite-modal/spacesuite-modal.component';
 
 
 @NgModule({
@@ -115,7 +116,8 @@ import { ReleaseNotesComponent } from './components/release-notes/release-notes.
     PopupComponent,
     Eo4geoFooterComponent,
     Eo4geoHeaderComponent,
-    ReleaseNotesComponent
+    ReleaseNotesComponent,
+    SpacesuiteModalComponent
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
